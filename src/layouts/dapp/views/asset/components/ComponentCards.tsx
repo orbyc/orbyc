@@ -9,7 +9,7 @@ import {
 import { AssetMetadata } from "orbyc-core/pb/metadata_pb";
 import { Link } from "react-router-dom";
 import { Asset } from "orbyc-core/pb/domain_pb";
-import { shortWeight } from "../../utils";
+import { shortWeight } from "../../helpers";
 
 interface ComponentCardsProps {
   asset: Asset;

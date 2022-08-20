@@ -37,7 +37,7 @@ import {
   getMovementsKilometers,
   shortNumber,
   shortWeight,
-} from "../utils";
+} from "../helpers";
 import Carousel from "react-multi-carousel";
 import { ComponentCard } from "./components/ComponentCards";
 
