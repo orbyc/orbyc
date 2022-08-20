@@ -4,7 +4,7 @@ import NotFound from "layouts/errors/views/NotFound";
 import { AssetExplorerView, ExplorerLayout } from "layouts/explorer";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { DappLayout } from "./layouts/dapp";
-import { Home } from "./layouts/dapp/views/Home";
+import { Home } from "./layouts/dapp/views/Dashboard";
 
 export const AppRoutes = () => {
   return (
