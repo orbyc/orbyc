@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { AppRoutes } from './routes';
 
+import 'index.scss';
+
 import 'react-multi-carousel/lib/styles.css';
+// import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

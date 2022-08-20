@@ -56,6 +56,8 @@ export function mockDataSource(erc245: ERC245Collection, erc423: ERC423Collectio
             accountInfo: (address) => Promise.resolve(erc423.accounts[address]),
             accountOf: (address) => Promise.resolve(erc423.agents[address]),
             hasRole: (address, role) => Promise.resolve(erc423.roles[role].includes(address)),
+        },
+        utils: {
             currentAccount: () => Promise.resolve("0x024269e2057b904d1fa6a7b52056a8580a85180f"),
         }
     }

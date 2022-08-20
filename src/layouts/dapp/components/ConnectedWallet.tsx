@@ -17,12 +17,12 @@ import { useState } from 'react';
 
 export function ConnectedWallet() {
   const { state } = useContext(DataSourceContext);
-  const { erc423 } = state.datasource!;
+  const { erc423, utils } = state.datasource!;
 
   const getAccount = useCallback(async () => {
-    const agent = await erc423.currentAccount();
+    const agent = await utils.currentAccount();
     return await erc423.accountOf(agent);
-  }, [erc423]);
+  }, [erc423, utils]);
 
   const { data: account, loading: loadingAccount } = useFetch(getAccount());
 

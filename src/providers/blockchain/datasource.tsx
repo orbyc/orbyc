@@ -17,20 +17,18 @@ export interface DataSource {
     getMovementCertificates: (id: number) => Promise<number[]>;
   };
   erc423: {
-    currentAccount: () => Promise<string>;
-
     accountOf: (address: string) => Promise<string>;
     accountInfo: (address: string) => Promise<AccountMetadata>;
     hasRole: (address: string, role: number) => Promise<boolean>;
+  };
+  utils: {
+    currentAccount: () => Promise<string>;
   };
 }
 
 /* ETHERS.JS Provider */
 
-export function EthersDataSource(
-  provider: ethers.providers.Web3Provider,
-  address: string
-): DataSource {
+export function EthersDataSource(provider: ethers.providers.Provider, address: string): DataSource {
   const ERC245Contract = new ethers.Contract(address, ERC245.abi, provider);
   const ERC423Contract = new ethers.Contract(address, ERC423.abi, provider);
 
@@ -38,15 +36,13 @@ export function EthersDataSource(
     erc245: {
       getAsset: async (id) => {
         const [owner, issuer, co2e, certId, metadata] = await ERC245Contract.assetInfo(id);
-
         const asset = new Asset();
+        asset.setId(id);
         asset.setCertid(certId);
         asset.setCo2e(co2e);
-        asset.setId(id);
         asset.setIssuer(issuer);
         asset.setMetadata(metadata);
         asset.setOwner(owner);
-
         return asset;
       },
       getAssetCertificates: (id) => ERC245Contract.assetCertificates(id),
@@ -54,42 +50,38 @@ export function EthersDataSource(
       getAssetTraceability: (id) => ERC245Contract.assetTraceability(id),
       getCertificate: async (id) => {
         const [issuer, metadata] = await ERC245Contract.certificateInfo(id);
-
         const certificate = new Certificate();
+        certificate.setId(id);
         certificate.setIssuer(issuer);
         certificate.setMetadata(metadata);
-        certificate.setId(id);
-
         return certificate;
       },
       getMovement: async (id) => {
-        const [issuer, co2e, certId, metadata] = ERC245Contract.movementInfo(id);
-
+        const [issuer, co2e, certId, metadata] = await ERC245Contract.movementInfo(id);
         const movement = new Movement();
+        movement.setId(id);
         movement.setCertid(certId);
         movement.setCo2e(co2e);
-        movement.setId(id);
         movement.setIssuer(issuer);
         movement.setMetadata(metadata);
-
         return movement;
       },
       getMovementCertificates: (id) => ERC245Contract.movementCertificates(id),
     },
     erc423: {
-      currentAccount: async () => {
-        const signer = provider.getSigner();
-        return await signer.getAddress();
-      },
-
       accountInfo: async (address) => {
         const metadata = await ERC423Contract.accountInfo(address);
-
         return AccountMetadata.deserializeBinary(decodeHex(metadata));
       },
-
-      accountOf: (address) => ERC423Contract.accountOf(address),
+      accountOf: async (address) => ERC423Contract.accountOf(address),
       hasRole: async (address, role) => ERC423Contract.hasRole(address, role),
+    },
+    utils: {
+      currentAccount: async () => {
+        const w3provider = provider as ethers.providers.Web3Provider;
+        const signer = w3provider.getSigner();
+        return await signer.getAddress();
+      },
     },
   };
 }

@@ -25,6 +25,7 @@ import { DataSourceContext } from 'providers/blockchain/provider';
 import { MetaMaskProvider } from 'metamask-react';
 import { ConnectWalletButton } from './ConnectWallet';
 import { ConnectedWallet } from './ConnectedWallet';
+import { Link } from 'react-router-dom';
 
 export function Navigation() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -56,20 +57,23 @@ export function Navigation() {
     [colorMode, toggleColorMode]
   );
 
+  const homeButtonBg = useColorModeValue('gray.100', 'gray.900');
+
+  const HomeButton = useCallback(
+    () => (
+      <Link to={`/dapp`}>
+        <Box w={45} h={45} p={2.5} cursor="pointer" bg={homeButtonBg} borderRadius={50}>
+          <Image src={`https://orbyc.github.io/dapp/orbyc.png`} />
+        </Box>
+      </Link>
+    ),
+    [homeButtonBg]
+  );
+
   return (
     <Box px={4}>
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-        <Box
-          w={45}
-          h={45}
-          p={2.5}
-          cursor="pointer"
-          bg={useColorModeValue('gray.100', 'gray.900')}
-          borderRadius={50}
-        >
-          <Image src={`https://orbyc.github.io/dapp/orbyc.png`} />
-        </Box>
-
+        <HomeButton />
         <Flex alignItems={'center'}>
           <Stack direction={'row'} spacing={3}>
             <WalletButton />
