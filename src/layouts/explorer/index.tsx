@@ -15,7 +15,7 @@ import {
   Spinner,
   theme,
 } from "@chakra-ui/react";
-import { AssetComponent } from "layouts/dapp/views/Asset";
+import { AssetComponent } from "layouts/dapp/views/asset";
 
 export const ExplorerLayout = () => {
   return (

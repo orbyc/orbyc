@@ -29,17 +29,17 @@ import { decodeHex } from "orbyc-core/utils/encoding";
 import { DataSourceContext } from "providers/blockchain/provider";
 import { useCallback, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Stat } from "../components/Stat";
-import { ImagesModal } from "../components/ImagesModal";
+import { Stat } from "./components/Stat";
+import { ImagesModal } from "./components/ImagesModal";
 import {
   getMovementsCarbonEmissions,
   getMovementsCountries,
   getMovementsKilometers,
   shortNumber,
   shortWeight,
-} from "./utils";
+} from "../utils";
 import Carousel from "react-multi-carousel";
-import { ComponentCard } from "../components/ComponentCards";
+import { ComponentCard } from "./components/ComponentCards";
 
 export const AssetView = () => {
   const { id } = useParams();

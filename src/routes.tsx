@@ -1,10 +1,10 @@
-import { AssetView } from "layouts/dapp/views/Asset";
+import { AssetView } from "layouts/dapp/views/asset";
 import { ErrorsLayout } from "layouts/errors";
 import NotFound from "layouts/errors/views/NotFound";
 import { AssetExplorerView, ExplorerLayout } from "layouts/explorer";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { DappLayout } from "./layouts/dapp";
-import { Home } from "./layouts/dapp/views/Dashboard";
+import { Home } from "./layouts/dapp/views/dashboard";
 
 export const AppRoutes = () => {
   return (

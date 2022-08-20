@@ -3,7 +3,7 @@ import { DataSourceContext, DataSourceProvider } from 'providers/blockchain/prov
 import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
-import { ConnectWallet } from './views/Home';
+import { ConnectWallet } from './views/home';
 
 export const DappLayout = () => (
   <ChakraProvider theme={theme}>

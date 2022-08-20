@@ -11,8 +11,8 @@ import {
 import { useCallback } from "react";
 import Carousel from "react-multi-carousel";
 import { useNavigate } from "react-router-dom";
-import AssetCard from "../components/AssetCard";
-import { responsive } from "./utils";
+import AssetCard from "./components/AssetCard";
+import { responsive } from "../utils";
 
 const Divider = () => <Box mt={100}></Box>;
 
