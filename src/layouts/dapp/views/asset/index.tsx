@@ -272,7 +272,7 @@ export const AssetComponent = (props: AssetProps) => {
         ))}
       </Box>
     ),
-    []
+    [dataAsset]
   );
 
   const ImagesData = useCallback(

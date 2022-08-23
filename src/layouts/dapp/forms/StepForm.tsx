@@ -1,7 +1,7 @@
 // import { Box, Divider, Grid, Step, StepLabel, Stepper } from "@mui/material";
-import { Button, Flex, Heading, Spacer } from "@chakra-ui/react";
+import { Button, Flex, Spacer } from "@chakra-ui/react";
 import { Step, Steps, useSteps } from "chakra-ui-steps";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 // import { Button } from "./Button";
 
 interface StepFormProps {
@@ -10,7 +10,7 @@ interface StepFormProps {
 }
 
 export default function StepForm(props: StepFormProps) {
-  const { nextStep, prevStep, setStep, reset, activeStep } = useSteps({
+  const { nextStep, prevStep, setStep, activeStep } = useSteps({
     initialStep: 0,
   });
 
