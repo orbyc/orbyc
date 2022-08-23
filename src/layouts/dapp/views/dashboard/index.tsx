@@ -4,19 +4,29 @@ import {
   Center,
   Container,
   Heading,
+  HStack,
+  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import Carousel from "react-multi-carousel";
 import { useNavigate } from "react-router-dom";
 import AssetCard from "./components/AssetCard";
 import { responsive } from "../helpers";
+import { FormModal } from "layouts/dapp/forms/ModalForm";
+import { AssetForm } from "layouts/dapp/forms/AssetForm";
+import { CertificateForm } from "layouts/dapp/forms/CertificateForm";
+import { MovementForm } from "layouts/dapp/forms/MovementForm";
+import { MdFeed, MdOutlineVerified, MdTimeline } from "react-icons/md";
+
+type IssueForm = "ASSET" | "CERTIFICATE" | "MOVEMENT" | "NONE";
 
 const Divider = () => <Box mt={100}></Box>;
 
-const circularEconomy = [1849, 1849, 1849, 1849, 1849];
+const circularEconomy = [188989, 1849];
 const sponsored = [1849, 1849, 1849];
 
 export const Home = () => {
@@ -29,23 +39,97 @@ export const Home = () => {
     [navigate]
   );
 
+  const [form, setForm] = useState<IssueForm>("NONE");
+  const openForm = useCallback(
+    (form: IssueForm) => () => {
+      console.log({ form });
+
+      setForm(form);
+    },
+    [setForm]
+  );
+  const closeForm = useCallback(() => setForm("NONE"), [setForm]);
+
+  const IssueButtons = useCallback(
+    () => (
+      <HStack ml={3}>
+        {/* ISSUE ASSET */}
+        <FormModal
+          title={`Issue Asset`}
+          open={form === "ASSET"}
+          handleClose={closeForm}
+        >
+          <AssetForm />
+        </FormModal>
+        <IconButton
+          onClick={openForm(`ASSET`)}
+          aria-label="Issue Asset"
+          borderRadius={20}
+          fontSize="20px"
+        >
+          <MdFeed />
+        </IconButton>
+        {/* ISSUE CERTIFICATE */}
+        <FormModal
+          title={`Issue Certificate`}
+          open={form === "CERTIFICATE"}
+          handleClose={closeForm}
+        >
+          <CertificateForm />
+        </FormModal>
+        <IconButton
+          onClick={openForm(`CERTIFICATE`)}
+          aria-label="Issue Certificate"
+          borderRadius={20}
+          fontSize="20px"
+        >
+          <MdOutlineVerified />
+        </IconButton>
+        {/* ISSUE MOVEMENT */}
+        <FormModal
+          title={`Issue Movement`}
+          open={form === "MOVEMENT"}
+          handleClose={closeForm}
+        >
+          <MovementForm />
+        </FormModal>
+        <IconButton
+          onClick={openForm(`MOVEMENT`)}
+          aria-label="Issue Movement"
+          borderRadius={20}
+          fontSize="20px"
+        >
+          <MdTimeline />
+        </IconButton>
+      </HStack>
+    ),
+    [closeForm, form, openForm]
+  );
+
   return (
     <>
-      {/* <Center> */}
       <Container maxW="8xl">
         <Center>
           <Box width={600} p={20}>
             <InputGroup>
               <InputLeftElement
                 pointerEvents="none"
-                children={<SearchIcon color="gray.300" />}
+                children={
+                  <SearchIcon
+                    color={useColorModeValue("gray.500", "gray.300")}
+                  />
+                }
               />
               <Input
                 type="number"
-                placeholder="Search"
+                fontWeight={`semibold`}
+                placeholder="Identifier number"
                 variant={`contained`}
                 onKeyDown={handleSubmit}
+                bgColor={useColorModeValue("gray.100", "gray.900")}
+                borderRadius={20}
               />
+              <IssueButtons />
             </InputGroup>
           </Box>
         </Center>

@@ -154,6 +154,9 @@ export const AssetComponent = (props: AssetProps) => {
   useEffect(() => {
     if (errorAsset) console.log({ error: errorAsset });
   }, [errorAsset]);
+  useEffect(() => {
+    if (dataAsset) console.log({ dataAsset });
+  }, [dataAsset]);
 
   const {
     data: dataMoves,
@@ -212,12 +215,7 @@ export const AssetComponent = (props: AssetProps) => {
         <></>
       ) : (
         <Carousel responsive={responsive}>
-          {[
-            ...dataComposition!,
-            ...dataComposition!,
-            ...dataComposition!,
-            ...dataComposition!,
-          ].map((data) => (
+          {dataComposition!.map((data) => (
             <ComponentCard {...data} />
           ))}
         </Carousel>
@@ -225,7 +223,7 @@ export const AssetComponent = (props: AssetProps) => {
     [loadingComposition, dataComposition]
   );
 
-  const PropertiesTable = useCallback(
+  const PropertiesData = useCallback(
     () => (
       <TableContainer>
         <Table variant="simple">
@@ -262,6 +260,19 @@ export const AssetComponent = (props: AssetProps) => {
       </TableContainer>
     ),
     [dataAsset]
+  );
+
+  const LinksData = useCallback(
+    () => (
+      <Box p={4} borderRadius={25} bgColor={`gray.900`}>
+        {dataAsset?.metadata.getLinksList().map((link) => (
+          <a href={link.getUrl()} target="_blank" rel="noreferrer">
+            {link.getName()}
+          </a>
+        ))}
+      </Box>
+    ),
+    []
   );
 
   const ImagesData = useCallback(
@@ -340,8 +351,7 @@ export const AssetComponent = (props: AssetProps) => {
             <IssuerIcon src={dataAsset?.issuer.getLogo()?.getAttachment()} />
           </HStack>
 
-          <Divider {...dividerProps} />
-
+          <br />
           <CompositionData />
 
           <Divider {...dividerProps} />
@@ -355,8 +365,12 @@ export const AssetComponent = (props: AssetProps) => {
 
           <Divider {...dividerProps} />
 
-          <PropertiesTable />
+          <PropertiesData />
+
           <br />
+
+          <LinksData />
+
           <br />
         </Box>
       ),
@@ -365,8 +379,9 @@ export const AssetComponent = (props: AssetProps) => {
       MovementsData,
       ImagesData,
       dataAsset,
-      PropertiesTable,
       CompositionData,
+      PropertiesData,
+      LinksData,
     ]
   );
 

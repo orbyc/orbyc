@@ -1,10 +1,10 @@
-import { ethers } from 'ethers';
-import { Asset, Certificate, Movement } from 'orbyc-core/pb/domain_pb';
-import { AccountMetadata } from 'orbyc-core/pb/metadata_pb';
+import { ethers } from "ethers";
+import { Asset, Certificate, Movement } from "orbyc-core/pb/domain_pb";
+import { AccountMetadata } from "orbyc-core/pb/metadata_pb";
 
-import ERC245 from 'orbyc-contracts/artifacts/contracts/tokens/ERC245/IERC245.sol/IERC245.json';
-import ERC423 from 'orbyc-contracts/artifacts/contracts/security/ERC423/IERC423.sol/IERC423.json';
-import { decodeHex } from 'orbyc-core/utils/encoding';
+import ERC245 from "orbyc-contracts/artifacts/contracts/tokens/ERC245/IERC245.sol/IERC245.json";
+import ERC423 from "orbyc-contracts/artifacts/contracts/security/ERC423/IERC423.sol/IERC423.json";
+import { decodeHex } from "orbyc-core/utils/encoding";
 
 export interface DataSource {
   erc245: {
@@ -15,6 +15,25 @@ export interface DataSource {
     getCertificate: (id: number) => Promise<Certificate>;
     getMovement: (id: number) => Promise<Movement>;
     getMovementCertificates: (id: number) => Promise<number[]>;
+
+    issueAsset: (asset: Asset) => Promise<boolean>;
+    issueCertificate: (cert: Certificate) => Promise<boolean>;
+    issueMovement: (move: Movement) => Promise<boolean>;
+
+    addAssetCertificates: (
+      assetId: number,
+      certificates: number[]
+    ) => Promise<boolean>;
+    addMovementCertificates: (
+      moveId: number,
+      certificates: number[]
+    ) => Promise<boolean>;
+    addMovements: (assetId: number, movements: number[]) => Promise<boolean>;
+    addParents: (
+      assetId: number,
+      parents: number[],
+      composition: number[]
+    ) => Promise<boolean>;
   };
   erc423: {
     accountOf: (address: string) => Promise<string>;
@@ -28,14 +47,21 @@ export interface DataSource {
 
 /* ETHERS.JS Provider */
 
-export function EthersDataSource(provider: ethers.providers.Provider, address: string): DataSource {
+export function EthersDataSource(
+  provider: ethers.providers.Provider,
+  address: string
+): DataSource {
   const ERC245Contract = new ethers.Contract(address, ERC245.abi, provider);
   const ERC423Contract = new ethers.Contract(address, ERC423.abi, provider);
+
+  const getSigner = (provider: ethers.providers.Provider) =>
+    (provider as ethers.providers.Web3Provider).getSigner();
 
   return {
     erc245: {
       getAsset: async (id) => {
-        const [owner, issuer, co2e, certId, metadata] = await ERC245Contract.assetInfo(id);
+        const [owner, issuer, co2e, certId, metadata] =
+          await ERC245Contract.assetInfo(id);
         const asset = new Asset();
         asset.setId(id);
         asset.setCertid(certId);
@@ -57,7 +83,8 @@ export function EthersDataSource(provider: ethers.providers.Provider, address: s
         return certificate;
       },
       getMovement: async (id) => {
-        const [issuer, co2e, certId, metadata] = await ERC245Contract.movementInfo(id);
+        const [issuer, co2e, certId, metadata] =
+          await ERC245Contract.movementInfo(id);
         const movement = new Movement();
         movement.setId(id);
         movement.setCertid(certId);
@@ -67,6 +94,54 @@ export function EthersDataSource(provider: ethers.providers.Provider, address: s
         return movement;
       },
       getMovementCertificates: (id) => ERC245Contract.movementCertificates(id),
+
+      /*  Mutations */
+      issueAsset: async (asset) =>
+        await ERC245Contract.connect(getSigner(provider)).issueAsset(
+          asset.getId(),
+          asset.getOwner(),
+          asset.getCo2e(),
+          asset.getCertid(),
+          asset.getMetadata()
+        ),
+
+      issueCertificate: async (cert) =>
+        await ERC245Contract.connect(getSigner(provider)).issueCertificate(
+          cert.getId(),
+          cert.getMetadata()
+        ),
+
+      issueMovement: async (move) =>
+        await ERC245Contract.connect(getSigner(provider)).issueMovement(
+          move.getId(),
+          move.getCo2e(),
+          move.getCertid(),
+          move.getMetadata()
+        ),
+
+      addAssetCertificates: async (assetId, certificates) =>
+        await ERC245Contract.connect(getSigner(provider)).addAssetCertificates(
+          assetId,
+          certificates
+        ),
+
+      addMovementCertificates: async (moveId, certificates) =>
+        await ERC245Contract.connect(
+          getSigner(provider)
+        ).addMovementCertificates(moveId, certificates),
+
+      addMovements: async (assetId, movements) =>
+        await ERC245Contract.connect(getSigner(provider)).addMovements(
+          assetId,
+          movements
+        ),
+
+      addParents: async (assetId, parents, composition) =>
+        await ERC245Contract.connect(getSigner(provider)).addParents(
+          assetId,
+          parents,
+          composition
+        ),
     },
     erc423: {
       accountInfo: async (address) => {
@@ -78,8 +153,7 @@ export function EthersDataSource(provider: ethers.providers.Provider, address: s
     },
     utils: {
       currentAccount: async () => {
-        const w3provider = provider as ethers.providers.Web3Provider;
-        const signer = w3provider.getSigner();
+        const signer = getSigner(provider);
         return await signer.getAddress();
       },
     },
