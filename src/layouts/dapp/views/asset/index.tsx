@@ -83,19 +83,22 @@ interface AssetProps {
 
 interface IssuerIconProps {
   src?: string;
+  href?: string;
 }
 
 const IssuerIcon = (props: IssuerIconProps) => (
-  <Box
-    w={50}
-    h={50}
-    p={2}
-    bg={useColorModeValue(`transparent`, `gray.900`)}
-    borderRadius={25}
-    cursor={`pointer`}
-  >
-    <Img src={props.src} />
-  </Box>
+  <a href={props.href}>
+    <Box
+      w={50}
+      h={50}
+      p={2}
+      bg={useColorModeValue(`transparent`, `gray.900`)}
+      borderRadius={25}
+      cursor={`pointer`}
+    >
+      <Img src={props.src} />
+    </Box>
+  </a>
 );
 
 export const AssetComponent = (props: AssetProps) => {
@@ -357,7 +360,10 @@ export const AssetComponent = (props: AssetProps) => {
               {dataAsset?.metadata.getName()}
             </Text>
             <Spacer />
-            <IssuerIcon src={dataAsset!.issuer.getLogo()!.getAttachment()} />
+            <IssuerIcon
+              src={dataAsset!.issuer.getLogo()!.getAttachment()}
+              // href={dataAsset!.issuer.getLinksList()[0].getUrl()}
+            />
             <ShareButton assetId={dataAsset!.asset.getId()} />
           </HStack>
 

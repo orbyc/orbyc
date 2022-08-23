@@ -9,6 +9,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
@@ -57,14 +58,16 @@ export const Home = () => {
         >
           <AssetForm />
         </FormModal>
-        <IconButton
-          onClick={openForm(`ASSET`)}
-          aria-label="Issue Asset"
-          borderRadius={20}
-          fontSize="20px"
-        >
-          <MdFeed />
-        </IconButton>
+        <Tooltip label={`Issue Asset`}>
+          <IconButton
+            onClick={openForm(`ASSET`)}
+            aria-label="Issue Asset"
+            borderRadius={20}
+            fontSize="20px"
+          >
+            <MdFeed />
+          </IconButton>
+        </Tooltip>
         {/* ISSUE CERTIFICATE */}
         <FormModal
           title={`Issue Certificate`}
@@ -73,14 +76,16 @@ export const Home = () => {
         >
           <CertificateForm />
         </FormModal>
-        <IconButton
-          onClick={openForm(`CERTIFICATE`)}
-          aria-label="Issue Certificate"
-          borderRadius={20}
-          fontSize="20px"
-        >
-          <MdOutlineVerified />
-        </IconButton>
+        <Tooltip label={`Issue Certificate`}>
+          <IconButton
+            onClick={openForm(`CERTIFICATE`)}
+            aria-label="Issue Certificate"
+            borderRadius={20}
+            fontSize="20px"
+          >
+            <MdOutlineVerified />
+          </IconButton>
+        </Tooltip>
         {/* ISSUE MOVEMENT */}
         <FormModal
           title={`Issue Movement`}
@@ -89,14 +94,16 @@ export const Home = () => {
         >
           <MovementForm />
         </FormModal>
-        <IconButton
-          onClick={openForm(`MOVEMENT`)}
-          aria-label="Issue Movement"
-          borderRadius={20}
-          fontSize="20px"
-        >
-          <MdTimeline />
-        </IconButton>
+        <Tooltip label={`Issue Movement`}>
+          <IconButton
+            onClick={openForm(`MOVEMENT`)}
+            aria-label="Issue Movement"
+            borderRadius={20}
+            fontSize="20px"
+          >
+            <MdTimeline />
+          </IconButton>
+        </Tooltip>
       </HStack>
     ),
     [closeForm, form, openForm]
