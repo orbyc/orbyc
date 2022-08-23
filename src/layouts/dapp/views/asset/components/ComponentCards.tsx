@@ -18,7 +18,7 @@ interface ComponentCardsProps {
 }
 export function ComponentCard(props: ComponentCardsProps): JSX.Element {
   return (
-    <Link to={`/dapp/${props.asset.getId()}`}>
+    <Link to={`/${props.asset.getId()}`}>
       <Box
         p={3}
         ml={3}

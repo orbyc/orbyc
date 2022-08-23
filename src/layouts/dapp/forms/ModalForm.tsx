@@ -7,13 +7,9 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 
 export function FormModal(props: FormModalProps) {
-  useEffect(() => {
-    console.log({ open: props.open });
-  }, [props.open]);
-
   return (
     <Modal isOpen={props.open} onClose={props.handleClose}>
       <ModalOverlay />

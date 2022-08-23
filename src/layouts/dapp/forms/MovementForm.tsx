@@ -200,7 +200,7 @@ export function MovementForm() {
 
           const transaction = await erc245.issueMovement(move);
 
-          console.log({ tx: transaction });
+          console.log({ transaction });
         } catch (error) {
           console.log({ error });
         }

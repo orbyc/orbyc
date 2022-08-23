@@ -41,11 +41,7 @@ export const Home = () => {
 
   const [form, setForm] = useState<IssueForm>("NONE");
   const openForm = useCallback(
-    (form: IssueForm) => () => {
-      console.log({ form });
-
-      setForm(form);
-    },
+    (form: IssueForm) => () => setForm(form),
     [setForm]
   );
   const closeForm = useCallback(() => setForm("NONE"), [setForm]);

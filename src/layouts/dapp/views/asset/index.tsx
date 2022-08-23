@@ -2,13 +2,19 @@ import { DragHandleIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
+  Center,
   Container,
   Divider,
   Flex,
   Grid,
   GridItem,
   HStack,
+  IconButton,
   Img,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
   Spacer,
   Table,
   TableCaption,
@@ -40,6 +46,8 @@ import {
 } from "../helpers";
 import Carousel from "react-multi-carousel";
 import { ComponentCard } from "./components/ComponentCards";
+import { MdQrCode } from "react-icons/md";
+import { OrbycQrCode } from "./components/OrbycQrCode";
 
 export const AssetView = () => {
   const { id } = useParams();
@@ -89,6 +97,7 @@ const IssuerIcon = (props: IssuerIconProps) => (
     <Img src={props.src} />
   </Box>
 );
+
 export const AssetComponent = (props: AssetProps) => {
   /* CREATE STATES */
   const [showImagesModal, { off: closeImagesModal, on: openImagesModal }] =
@@ -348,7 +357,8 @@ export const AssetComponent = (props: AssetProps) => {
               {dataAsset?.metadata.getName()}
             </Text>
             <Spacer />
-            <IssuerIcon src={dataAsset?.issuer.getLogo()?.getAttachment()} />
+            <IssuerIcon src={dataAsset!.issuer.getLogo()!.getAttachment()} />
+            <ShareButton assetId={dataAsset!.asset.getId()} />
           </HStack>
 
           <br />
@@ -387,3 +397,35 @@ export const AssetComponent = (props: AssetProps) => {
 
   return <AssetData />;
 };
+interface ShareButtonProps {
+  assetId: number;
+}
+
+function ShareButton(props: ShareButtonProps) {
+  const [isOpen, { on, off }] = useBoolean(false);
+  return (
+    <>
+      <Modal isOpen={isOpen} onClose={off}>
+        <ModalOverlay />
+        <ModalContent borderRadius={40} bgColor={`white`}>
+          <ModalBody>
+            <Center>
+              <OrbycQrCode assetId={props.assetId} />
+            </Center>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+      <IconButton
+        aria-label="share asset"
+        borderRadius={25}
+        fontSize="30px"
+        w={50}
+        h={50}
+        onClick={on}
+        bgColor={useColorModeValue(`transparent`, `gray.900`)}
+      >
+        <MdQrCode />
+      </IconButton>
+    </>
+  );
+}
