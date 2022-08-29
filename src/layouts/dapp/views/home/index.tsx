@@ -8,74 +8,78 @@ import {
   Icon,
   useColorModeValue,
   createIcon,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 export function ConnectWallet() {
   return (
     <>
-      <Container maxW={'3xl'}>
+      <Container maxW={"3xl"}>
         <Stack
           as={Box}
-          textAlign={'center'}
+          textAlign={"center"}
           spacing={{ base: 8, md: 14 }}
           py={{ base: 20, md: 36 }}
         >
           <Heading
             fontWeight={600}
-            fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-            lineHeight={'110%'}
+            fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
+            lineHeight={"110%"}
           >
-            Make money from <br />
-            <Text as={'span'} color={'green.400'}>
-              your audience
+            Become a key player in the <br />
+            <Text as={"span"} color={"green.400"}>
+              decarbonization of our Planet!
             </Text>
           </Heading>
-          <Text color={'gray.500'}>
-            Monetize your content by charging your most loyal readers and reward them loyalty
-            points. Give back to your loyal readers by granting them access to your pre-releases and
-            sneak-peaks.
+          <Text color={"gray.500"}>
+            Create your own NFTs, connect securely with brands, consumers and
+            suppliers and start decarbonize our planet. Decreasing costs by
+            regenerating our economy has never been so interconnected! It’ss
+            efficient, secure and in one source if truth. Our network is Carbon
+            Neutral Certified.
           </Text>
           <Stack
-            direction={'column'}
+            direction={"column"}
             spacing={3}
-            align={'center'}
-            alignSelf={'center'}
-            position={'relative'}
+            align={"center"}
+            alignSelf={"center"}
+            position={"relative"}
           >
-            <Button
-              colorScheme={'green'}
-              bg={'green.400'}
-              rounded={'full'}
-              px={6}
-              _hover={{
-                bg: 'green.500',
-              }}
-            >
-              Get Started
-            </Button>
-            <Button variant={'link'} colorScheme={'grey'} size={'sm'}>
+            <a href="https://orbyc.com">
+              <Button
+                colorScheme={"green"}
+                bg={"green.400"}
+                rounded={"full"}
+                px={6}
+                _hover={{
+                  bg: "green.500",
+                }}
+              >
+                Get Started
+              </Button>
+            </a>
+            <Button variant={"link"} colorScheme={"grey"} size={"sm"}>
               Learn more
             </Button>
-            <Box>
+            {/* <Box>
               <Icon
                 as={Arrow}
-                color={useColorModeValue('gray.800', 'gray.300')}
+                color={useColorModeValue("gray.800", "gray.300")}
                 w={71}
-                position={'absolute'}
+                position={"absolute"}
                 right={-71}
-                top={'10px'}
+                top={"10px"}
               />
               <Text
-                fontSize={'lg'}
-                fontFamily={'Caveat'}
-                position={'absolute'}
-                right={'-125px'}
-                top={'-15px'}
-                transform={'rotate(10deg)'}
+                fontSize={"lg"}
+                fontFamily={"Caveat"}
+                position={"absolute"}
+                right={"-125px"}
+                top={"-15px"}
+                transform={"rotate(10deg)"}
               >
                 Starting at $15/mo
               </Text>
-            </Box>
+            </Box> */}
           </Stack>
         </Stack>
       </Container>
@@ -84,8 +88,8 @@ export function ConnectWallet() {
 }
 
 const Arrow = createIcon({
-  displayName: 'Arrow',
-  viewBox: '0 0 72 24',
+  displayName: "Arrow",
+  viewBox: "0 0 72 24",
   path: (
     <path
       fillRule="evenodd"
