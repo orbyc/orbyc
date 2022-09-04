@@ -27,7 +27,7 @@ type IssueForm = "ASSET" | "CERTIFICATE" | "MOVEMENT" | "NONE";
 
 const Divider = () => <Box mt={100}></Box>;
 
-const circularEconomy = [188989, 1849];
+const circularEconomy = [188989, 1849, 19199];
 const sponsored = [1849, 1849, 1849];
 
 export const Home = () => {

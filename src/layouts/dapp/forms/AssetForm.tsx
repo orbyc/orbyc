@@ -141,7 +141,7 @@ export function AssetForm() {
                   />
                 </div>
                 <div className="row">
-                  <label htmlFor={`propertiesList.${index}.icon`}>Icon</label>
+                  <label htmlFor={`propertiesList.${index}.icon`}>Unit</label>
                   <Field name={`propertiesList.${index}.icon`} type="text" />
                   <ErrorMessage
                     name={`propertiesList.${index}.icon`}
@@ -251,7 +251,7 @@ export function AssetForm() {
         <Field type="text" name="creation.country" />
         <ErrorMessage name="creation.country" component="div" />
       </div>
-      <div>
+      {/* <div>
         <label htmlFor="creation.lat">Latitude</label>
         <Field type="text" name="creation.lat" />
         <ErrorMessage name="creation.lat" component="div" />
@@ -260,7 +260,7 @@ export function AssetForm() {
         <label htmlFor="creation.lng">Longitude</label>
         <Field type="text" name="creation.lng" />
         <ErrorMessage name="creation.lng" component="div" />
-      </div>
+      </div> */}
     </div>
   );
 
@@ -280,7 +280,7 @@ export function AssetForm() {
                     className="field-error"
                   />
                 </div>
-                <div className="row">
+                {/* <div className="row">
                   <label htmlFor={`linksList.${index}.icon`}>Icon</label>
                   <Field name={`linksList.${index}.icon`} type="text" />
                   <ErrorMessage
@@ -288,7 +288,7 @@ export function AssetForm() {
                     component="div"
                     className="field-error"
                   />
-                </div>
+                </div> */}
                 <div className="row">
                   <label htmlFor={`linksList.${index}.url`}>Url</label>
                   <Field name={`linksList.${index}.url`} type="text" />

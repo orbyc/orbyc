@@ -46,7 +46,7 @@ export function ComponentCard(props: ComponentCardsProps): JSX.Element {
                 {props.percent}%
               </Text>
               <Text fontSize={`sm`} fontWeight={`semibold`}>
-                {shortWeight(props.asset.getId())} Co2e
+                {shortWeight(props.asset.getCo2e())} Co2e
               </Text>
             </VStack>
           </GridItem>

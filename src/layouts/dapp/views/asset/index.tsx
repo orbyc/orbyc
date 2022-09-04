@@ -2,19 +2,13 @@ import { DragHandleIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  Center,
   Container,
   Divider,
   Flex,
   Grid,
   GridItem,
   HStack,
-  IconButton,
   Img,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalOverlay,
   Spacer,
   Table,
   TableCaption,
@@ -46,8 +40,7 @@ import {
 } from "../helpers";
 import Carousel from "react-multi-carousel";
 import { ComponentCard } from "./components/ComponentCards";
-import { MdQrCode } from "react-icons/md";
-import { OrbycQrCode } from "./components/OrbycQrCode";
+import { ShareButton } from "./components/ShareButton";
 
 export const AssetView = () => {
   const { id } = useParams();
@@ -242,30 +235,30 @@ export const AssetComponent = (props: AssetProps) => {
           <TableCaption>
             All this properties are verified by{" "}
             <a href={`https://orbyc.com`} target="_blank" rel="noreferrer">
-              Orbyc®
+              orbyc®
             </a>
           </TableCaption>
           <Thead>
             <Tr>
               <Th>Property</Th>
-              <Th>Unit</Th>
               <Th isNumeric>Value</Th>
+              <Th isNumeric>Unit</Th>
             </Tr>
           </Thead>
           <Tbody>
             {dataAsset?.metadata.getPropertiesList()!.map((p) => (
               <Tr key={p.getName()}>
                 <Td>{p.getName()}</Td>
-                <Td>millimeters (mm)</Td>
                 <Td isNumeric>{p.getValue()}</Td>
+                <Td isNumeric>{p.getIcon()}</Td>
               </Tr>
             ))}
           </Tbody>
           <Tfoot>
             <Tr>
               <Th>Property</Th>
-              <Th>Unit</Th>
               <Th isNumeric>Value</Th>
+              <Th isNumeric>Unit</Th>
             </Tr>
           </Tfoot>
         </Table>
@@ -373,10 +366,7 @@ export const AssetComponent = (props: AssetProps) => {
           <Divider {...dividerProps} />
 
           <Text align={`justify`} fontWeight={`medium`}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil vel
-            omnis repellat qui nam excepturi dignissimos placeat quam, quidem
-            nulla, perspiciatis commodi maxime blanditiis architecto sint
-            explicabo dolorem maiores distinctio!
+            {dataAsset?.metadata.getDescription()}
           </Text>
 
           <Divider {...dividerProps} />
@@ -403,35 +393,3 @@ export const AssetComponent = (props: AssetProps) => {
 
   return <AssetData />;
 };
-interface ShareButtonProps {
-  assetId: number;
-}
-
-function ShareButton(props: ShareButtonProps) {
-  const [isOpen, { on, off }] = useBoolean(false);
-  return (
-    <>
-      <Modal isOpen={isOpen} onClose={off}>
-        <ModalOverlay />
-        <ModalContent borderRadius={40} bgColor={`white`}>
-          <ModalBody>
-            <Center>
-              <OrbycQrCode assetId={props.assetId} />
-            </Center>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-      <IconButton
-        aria-label="share asset"
-        borderRadius={25}
-        fontSize="30px"
-        w={50}
-        h={50}
-        onClick={on}
-        bgColor={useColorModeValue(`transparent`, `gray.900`)}
-      >
-        <MdQrCode />
-      </IconButton>
-    </>
-  );
-}

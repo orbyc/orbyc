@@ -112,7 +112,7 @@ export function MovementForm() {
         <Field type="text" name="from.country" />
         <ErrorMessage name="from.country" component="div" />
       </div>
-      <div>
+      {/* <div>
         <label htmlFor="from.lat">Latitude</label>
         <Field type="text" name="from.lat" />
         <ErrorMessage name="from.lat" component="div" />
@@ -121,7 +121,7 @@ export function MovementForm() {
         <label htmlFor="from.lng">Longitude</label>
         <Field type="text" name="from.lng" />
         <ErrorMessage name="from.lng" component="div" />
-      </div>
+      </div> */}
     </div>
   );
 
@@ -142,7 +142,7 @@ export function MovementForm() {
         <Field type="text" name="to.country" />
         <ErrorMessage name="to.country" component="div" />
       </div>
-      <div>
+      {/* <div>
         <label htmlFor="to.lat">Latitude</label>
         <Field type="text" name="to.lat" />
         <ErrorMessage name="to.lat" component="div" />
@@ -151,7 +151,7 @@ export function MovementForm() {
         <label htmlFor="to.lng">Longitude</label>
         <Field type="text" name="to.lng" />
         <ErrorMessage name="to.lng" component="div" />
-      </div>
+      </div> */}
     </div>
   );
 

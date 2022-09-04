@@ -37,6 +37,7 @@ export function shortWeight(value: number): string {
     value = value / 1e3;
     unit = `kg`;
   } else {
+    value = value / 1;
     unit = `g`;
   }
 
