@@ -1,12 +1,12 @@
-import { Box, Heading, Text, Button } from '@chakra-ui/react';
-import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Box, Heading, Text, Button } from "@chakra-ui/react";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function NotFound() {
   const navigate = useNavigate();
 
   const handleRedirectHome = useCallback(() => navigate(`/dapp`), [navigate]);
-  
+
   return (
     <Box textAlign="center" py={10} px={6}>
       <Heading
@@ -21,7 +21,7 @@ export default function NotFound() {
       <Text fontSize="18px" mt={3} mb={2}>
         Page Not Found
       </Text>
-      <Text color={'gray.500'} mb={6}>
+      <Text color={"gray.500"} mb={6}>
         The page you're looking for does not seem to exist
       </Text>
 

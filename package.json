@@ -21,6 +21,7 @@
     "@types/react-image-gallery": "^1.0.5",
     "chakra-ui-steps": "^1.7.4",
     "ethers": "^5.6.9",
+    "exceljs": "^4.3.0",
     "formik": "^2.2.9",
     "framer-motion": "^7.0.0",
     "gh-pages": "^4.0.0",
@@ -39,6 +40,7 @@
     "react-qrcode-logo": "^2.8.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "reactv16-mailto": "^0.4.4",
     "sass": "^1.54.4",
     "scss": "^0.2.4",
     "typescript": "^4.4.2",
@@ -50,7 +52,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "yarn build",
+    "predeploy": "yarn build && cp CNAME build/",
     "deploy": "gh-pages -d build -r git@github.com:orbyc/orbyc.github.io"
   },
   "eslintConfig": {

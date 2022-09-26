@@ -5,7 +5,7 @@ interface OrbycQrCodeProps {
 export function OrbycQrCode(props: OrbycQrCodeProps) {
   return (
     <QRCode
-      value={`orbyc.github.io/#/${props.assetId}`}
+      value={`dapp.orbyc.com/#/${props.assetId}`}
       bgColor={`transparent`}
       logoImage={`https://orbyc.github.io/qr-logo.png`}
       fgColor="#0A785A"

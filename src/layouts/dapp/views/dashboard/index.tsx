@@ -12,7 +12,7 @@ import {
   Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import { useNavigate } from "react-router-dom";
 import AssetCard from "./components/AssetCard";
@@ -22,20 +22,65 @@ import { AssetForm } from "layouts/dapp/forms/AssetForm";
 import { CertificateForm } from "layouts/dapp/forms/CertificateForm";
 import { MovementForm } from "layouts/dapp/forms/MovementForm";
 import { MdFeed, MdOutlineVerified, MdTimeline } from "react-icons/md";
+import { useDropzone } from "react-dropzone";
+import Excel from "exceljs";
 
 type IssueForm = "ASSET" | "CERTIFICATE" | "MOVEMENT" | "NONE";
 
 const Divider = () => <Box mt={100}></Box>;
 
-const circularEconomy = [188989, 1849, 19199];
-const sponsored = [1849, 1849, 1849];
+const circularEconomy = [1123, 1124];
+const sponsored = [1125];
+
+const DZone = () => {
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+
+    acceptedFiles,
+  } = useDropzone({
+    accept: {
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xls",
+        ".xlsx",
+      ],
+      "application/vnd.ms-excel": [".xls", ".xlsx"],
+    },
+  });
+
+  useEffect(() => {
+    for (const file of acceptedFiles) {
+      const workbook = new Excel.Workbook();
+      workbook.xlsx.read(file.stream()).then((f) => {});
+    }
+  }, [acceptedFiles]);
+
+  return (
+    <div className="container">
+      <Box
+        {...getRootProps({ className: "dropzone" })}
+        padding={10}
+        bgColor={useColorModeValue("gray.100", "gray.900")}
+        borderRadius={25}
+      >
+        <input {...getInputProps()} />
+        {isDragAccept && <p>All files will be accepted</p>}
+        {isDragReject && <p>Some files will be rejected</p>}
+        {!isDragActive && <p>Drop some files here ...</p>}
+      </Box>
+    </div>
+  );
+};
 
 export const Home = () => {
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(
     (e: any) => {
-      if (e.code === "Enter") navigate(`/dapp/${e.target.value}`);
+      if (e.code === "Enter") navigate(`/browser/${e.target.value}`);
     },
     [navigate]
   );
@@ -112,8 +157,10 @@ export const Home = () => {
   return (
     <>
       <Container maxW="8xl">
+        <Divider />
+
         <Center>
-          <Box width={600} p={20}>
+          <Box width={600}>
             <InputGroup>
               <InputLeftElement
                 pointerEvents="none"
@@ -137,9 +184,17 @@ export const Home = () => {
           </Box>
         </Center>
 
+        <Divider />
+
+        <Center>
+          <DZone />
+        </Center>
+
+        <Divider />
+
         <Center p={5}>
           <Heading as="h4" size="lg" fontWeight={200}>
-            Circular economy products
+            Verified circular economy products
           </Heading>
         </Center>
         <Carousel
@@ -155,7 +210,7 @@ export const Home = () => {
 
         <Center p={5}>
           <Heading as="h4" size="lg" fontWeight={200}>
-            From our sponsored
+            Verified sponsored products
           </Heading>
         </Center>
         <Carousel

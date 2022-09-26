@@ -1,8 +1,12 @@
 import { AssetView } from "layouts/dapp/views/asset";
 import { ErrorsLayout } from "layouts/errors";
-import NotFound from "layouts/errors/views/NotFound";
 import { AssetExplorerView, ExplorerLayout } from "layouts/explorer";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { DappLayout } from "./layouts/dapp";
 import { Home } from "./layouts/dapp/views/dashboard";
 
@@ -10,7 +14,7 @@ export const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="dapp" element={<DappLayout />}>
+        <Route path="browser" element={<DappLayout />}>
           <Route index element={<Home />} />
           <Route path=":id" element={<AssetView />} />
         </Route>
@@ -24,3 +28,5 @@ export const AppRoutes = () => {
     </Router>
   );
 };
+
+const NotFound = () => <Navigate to="/browser" />;

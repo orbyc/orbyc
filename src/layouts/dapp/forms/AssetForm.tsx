@@ -88,9 +88,9 @@ export function AssetForm() {
         <ErrorMessage name="name" component="div" />
       </div>
       <div>
-        <label htmlFor="creation.description">Description</label>
-        <Field type="text" name="creation.description" />
-        <ErrorMessage name="creation.description" component="div" />
+        <label htmlFor="description">Description</label>
+        <Field type="text" name="description" />
+        <ErrorMessage name="description" component="div" />
       </div>
       <div>
         <label htmlFor="co2e">Carbon Emissions</label>
@@ -102,7 +102,7 @@ export function AssetForm() {
         <Field type="number" name="certid" />
         <ErrorMessage name="certid" component="div" />
       </div>
-      <div>
+      {/* <div>
         <label htmlFor="header">Header message</label>
         <Field type="text" name="header" />
         <ErrorMessage name="header" component="div" />
@@ -111,7 +111,7 @@ export function AssetForm() {
         <label htmlFor="background.attachment">Header image</label>
         <Field type="text" name="background.attachment" />
         <ErrorMessage name="background.attachment" component="div" />
-      </div>
+      </div> */}
     </div>
   );
 
@@ -394,7 +394,6 @@ export function AssetForm() {
           asset.setOwner(data.owner);
           asset.setMetadata(encodeHex(metadata.serializeBinary()));
 
-          console.log({ asset: asset.toObject() });
           const transaction = await erc245.issueAsset(asset);
           console.log("working");
           console.log({ transaction });

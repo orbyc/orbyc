@@ -2,6 +2,7 @@ import { DragHandleIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
+  Center,
   Container,
   Divider,
   Flex,
@@ -98,6 +99,8 @@ export const AssetComponent = (props: AssetProps) => {
   /* CREATE STATES */
   const [showImagesModal, { off: closeImagesModal, on: openImagesModal }] =
     useBoolean(false);
+
+  const toggleColor = useColorModeValue(`gray.100`, `gray.900`);
 
   const { state } = useContext(DataSourceContext);
   const { erc245, erc423 } = state.datasource!;
@@ -269,15 +272,23 @@ export const AssetComponent = (props: AssetProps) => {
 
   const LinksData = useCallback(
     () => (
-      <Box p={4} borderRadius={25} bgColor={`gray.900`}>
-        {dataAsset?.metadata.getLinksList().map((link) => (
-          <a href={link.getUrl()} target="_blank" rel="noreferrer">
-            {link.getName()}
-          </a>
-        ))}
+      <Box p={4} borderRadius={10} bgColor={toggleColor}>
+        <Grid templateColumns="repeat(3, 1fr)">
+          {dataAsset?.metadata.getLinksList().map((link) => (
+            <>
+              <GridItem>
+                <Center>
+                  <a href={link.getUrl()} target="_blank" rel="noreferrer">
+                    <Text>{link.getName()}</Text>
+                  </a>
+                </Center>
+              </GridItem>
+            </>
+          ))}
+        </Grid>
       </Box>
     ),
-    [dataAsset]
+    [dataAsset, toggleColor]
   );
 
   const ImagesData = useCallback(
@@ -336,9 +347,9 @@ export const AssetComponent = (props: AssetProps) => {
             templateColumns="repeat(3, 1fr)"
             gap={4}
           >
-            <GridItem rowSpan={2} colSpan={2} bg="gray.900" />
-            <GridItem colSpan={1} bg="gray.900" />
-            <GridItem colSpan={1} bg="gray.900" />
+            <GridItem rowSpan={2} colSpan={2} bg={toggleColor} />
+            <GridItem colSpan={1} bg={toggleColor} />
+            <GridItem colSpan={1} bg={toggleColor} />
           </Grid>
         </Box>
       ) : (
@@ -388,6 +399,7 @@ export const AssetComponent = (props: AssetProps) => {
       CompositionData,
       PropertiesData,
       LinksData,
+      toggleColor,
     ]
   );
 

@@ -61,7 +61,7 @@ export function Navigation() {
 
   const HomeButton = useCallback(
     () => (
-      <Link to={`/dapp`}>
+      <Link to={`/`}>
         <Box
           w={45}
           h={45}

@@ -7,14 +7,14 @@ import {
   Stack,
   Image,
   Spinner,
-} from '@chakra-ui/react';
-import { useFetch } from 'hooks';
-import { AssetMetadata } from 'orbyc-core/pb/metadata_pb';
-import { decodeHex } from 'orbyc-core/utils/encoding';
-import { DataSourceContext } from 'providers/blockchain/provider';
-import { useCallback } from 'react';
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+} from "@chakra-ui/react";
+import { useFetch } from "hooks";
+import { AssetMetadata } from "orbyc-core/pb/metadata_pb";
+import { decodeHex } from "orbyc-core/utils/encoding";
+import { DataSourceContext } from "providers/blockchain/provider";
+import { useCallback } from "react";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 // const IMAGE =
 //   'https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80';
@@ -30,7 +30,9 @@ export default function AssetCard(props: AssetCardProps) {
   const getData = useCallback(
     async (assetId: number) => {
       const asset = await erc245.getAsset(assetId);
-      const metadata = AssetMetadata.deserializeBinary(decodeHex(asset.getMetadata()));
+      const metadata = AssetMetadata.deserializeBinary(
+        decodeHex(asset.getMetadata())
+      );
 
       const issuerId = asset.getIssuer();
       const issuer = await erc423.accountInfo(issuerId);
@@ -59,75 +61,80 @@ export default function AssetCard(props: AssetCardProps) {
   }
 
   const assetImage = loading ? (
-    <Box rounded={'lg'} objectFit={'cover'}>
+    <Box rounded={"lg"} objectFit={"cover"}>
       <Center height={230} width={282}>
         <Spinner size={`lg`} />
       </Center>
     </Box>
   ) : (
     <Image
-      rounded={'lg'}
+      rounded={"lg"}
       height={230}
       width={282}
-      objectFit={'cover'}
-      src={data?.metadata.getBackground()?.getAttachment()}
+      objectFit={"cover"}
+      src={data?.metadata.getImagesList()[0]?.getAttachment()}
     />
   );
 
   const assetContent = loading ? (
     <>Loading...</>
   ) : (
-    <Stack pt={10} align={'center'}>
-      <Text color={'gray.500'} fontSize={'sm'} fontWeight={800} textTransform={'uppercase'}>
+    <Stack pt={10} align={"center"}>
+      <Text
+        color={"gray.500"}
+        fontSize={"sm"}
+        fontWeight={800}
+        textTransform={"uppercase"}
+      >
         {data?.issuer.getName()}
       </Text>
-      <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={800}>
+      <Heading fontSize={"2xl"} fontFamily={"body"} fontWeight={800}>
         {data?.metadata.getName()}
       </Heading>
-      <Stack direction={'row'} align={'center'}>
-        <Text fontWeight={500} fontSize={'xl'}>
+      <Stack direction={"row"} align={"center"}>
+        <Text fontWeight={500} fontSize={"xl"}>
           {data?.asset.getCo2e().toString()}
         </Text>
-        <Text color={'gray.600'}>Co2e</Text>
+        <Text color={"gray.600"}>Co2e</Text>
       </Stack>
     </Stack>
   );
 
   return (
-    <Link to={`/dapp/${data?.asset.getId()}`}>
+    <Link to={`/browser/${data?.asset.getId()}`}>
       <Center py={12}>
         <Box
           cursor={`pointer`}
-          role={'group'}
+          role={"group"}
           p={6}
-          maxW={'330px'}
-          w={'full'}
-          bg={useColorModeValue('white', 'gray.800')}
-          boxShadow={'2xl'}
-          rounded={'lg'}
-          pos={'relative'}
+          maxW={"330px"}
+          w={"full"}
+          bg={useColorModeValue("white", "gray.800")}
+          boxShadow={"2xl"}
+          rounded={"lg"}
+          pos={"relative"}
           zIndex={1}
         >
           <Box
-            rounded={'lg'}
+            rounded={"lg"}
             mt={-12}
-            pos={'relative'}
-            height={'230px'}
+            pos={"relative"}
+            height={"230px"}
             _after={{
-              transition: 'all .3s ease',
+              transition: "all .3s ease",
               content: '""',
-              w: 'full',
-              h: 'full',
-              pos: 'absolute',
+              w: "full",
+              h: "full",
+              pos: "absolute",
               top: 5,
               left: 0,
               // backgroundImage: `url(${data?.metadata.getBackground()?.getAttachment()})`,
-              filter: 'blur(15px)',
+              filter: "blur(15px)",
               zIndex: -1,
             }}
             _groupHover={{
               _after: {
-                filter: 'blur(20px)',
+                filter: "blur(20px)",
               },
             }}
           >

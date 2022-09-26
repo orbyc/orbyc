@@ -5,10 +5,11 @@ import {
   Text,
   Button,
   Stack,
-  Icon,
-  useColorModeValue,
   createIcon,
 } from "@chakra-ui/react";
+
+// @ts-ignore
+import Mailto from "reactv16-mailto";
 
 export function ConnectWallet() {
   return (
@@ -31,11 +32,13 @@ export function ConnectWallet() {
             </Text>
           </Heading>
           <Text color={"gray.500"}>
-            Create your own NFTs, connect securely with brands, consumers and
-            suppliers and start decarbonize our planet. Decreasing costs by
-            regenerating our economy has never been so interconnected! It’ss
-            efficient, secure and in one source if truth. Our network is Carbon
-            Neutral Certified.
+            Search and Create your own NFTs, connect securely with brands,
+            consumers and suppliers to start decarbonizing our planet.
+            Decreasing costs by regenerating our economy has never been so
+            interconnected! It’s efficient, secure and in one source of truth.
+          </Text>
+          <Text color={"gray.500"}>
+            Don’t forget that, Our network is Carbon Neutral Certified.
           </Text>
           <Stack
             direction={"column"}
@@ -44,7 +47,13 @@ export function ConnectWallet() {
             alignSelf={"center"}
             position={"relative"}
           >
-            <a href="https://orbyc.com">
+            <Mailto
+              email={`support@orbyc.com`}
+              headers={{
+                Subject: "Hey, I would like to decarbonize our planet!",
+                Body:"Hello!"
+              }}
+            >
               <Button
                 colorScheme={"green"}
                 bg={"green.400"}
@@ -56,10 +65,13 @@ export function ConnectWallet() {
               >
                 Get Started
               </Button>
+            </Mailto>
+
+            <a href="https://orbyc.com">
+              <Button variant={"link"} colorScheme={"grey"} size={"sm"}>
+                Learn more
+              </Button>
             </a>
-            <Button variant={"link"} colorScheme={"grey"} size={"sm"}>
-              Learn more
-            </Button>
             {/* <Box>
               <Icon
                 as={Arrow}
