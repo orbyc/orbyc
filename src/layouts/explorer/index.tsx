@@ -37,9 +37,9 @@ const ExplorerView = () => {
       addDataSource(
         EthersDataSource(
           new ethers.providers.JsonRpcProvider(
-            `https://ropsten.infura.io/v3/1e11387af97e45669280bcb33254891e`
+            `https://goerli.infura.io/v3/1e11387af97e45669280bcb33254891e`
           ),
-          "0xd7dB90F36cACb1e06C5473414C91a7E5F64D63cd"
+          "0x103e864f1BFedeACd63b09874A228a7131316466"
         )
       )
     );
