@@ -52,9 +52,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "yarn build && cp CNAME build/",
+    "predeploy": "yarn build && echo dapp.orbyc.com > build/CNAME",
     "deploy": "gh-pages -d build -r git@github.com:orbyc/orbyc.github.io",
-    "predev:deploy": "yarn build && cp CNAME build/",
+    "predev:deploy": "yarn build && echo dev.dapp.orbyc.com > build/CNAME",
     "dev:deploy": "gh-pages -d build -r git@github.com:orbyc-dev/orbyc-dev.github.io.git"
   },
   "eslintConfig": {
