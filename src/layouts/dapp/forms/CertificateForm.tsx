@@ -10,6 +10,8 @@ import { SubmitFormProps } from "./AssetForm";
 import { useContext } from "react";
 import { DataSourceContext } from "providers/blockchain/provider";
 
+import "./FormStyle.scss";
+
 const validationSchema = yup.object({});
 
 export function CertificateForm() {
@@ -31,24 +33,24 @@ export function CertificateForm() {
   /* steps forms */
   const GeneralForm = () => (
     <div>
-      <div>
+      <div className="general-form">
         <label htmlFor="id">Serial number</label>
-        <Field type="number" name="id" />
+        <Field className="input-field" type="number" name="id" />
         <ErrorMessage name="id" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="issuedat">Issuance date</label>
-        <Field type="datetime-local" name="issuedat" />
+        <Field className="input-field" type="datetime-local" name="issuedat" />
         <ErrorMessage name="issuedat" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="url">Certificate URL</label>
-        <Field type="text" name="url" />
+        <Field className="input-field" type="text" name="url" />
         <ErrorMessage name="url" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="attachment">File</label>
-        <Field type="text" name="attachment" />
+        <Field className="input-field" type="text" name="attachment" />
         <ErrorMessage name="attachment" component="div" />
       </div>
     </div>
@@ -56,7 +58,7 @@ export function CertificateForm() {
 
   const PublishForm = ({ isSubmitting }: SubmitFormProps) => (
     <>
-      <button type="submit" disabled={isSubmitting}>
+      <button className="btn-add" type="submit" disabled={isSubmitting}>
         Publish to Blockchain
       </button>
     </>

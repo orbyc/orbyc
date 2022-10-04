@@ -10,6 +10,8 @@ import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 import { useContext } from "react";
 import { DataSourceContext } from "providers/blockchain/provider";
 
+import "./FormStyle.scss";
+
 // interface FormProps {
 //   values: MovementMetadata.AsObject & Movement.AsObject;
 // }
@@ -30,7 +32,7 @@ const validationSchema = yup.object({});
 
 const PublishForm = ({ isSubmitting }: SubmitFormProps) => (
   <>
-    <button type="submit" disabled={isSubmitting}>
+    <button className="btn-add" type="submit" disabled={isSubmitting}>
       Publish to Blockchain
     </button>
   </>
@@ -62,14 +64,14 @@ export function MovementForm() {
   /* steps forms */
   const GeneralForm = () => (
     <div>
-      <div>
+      <div className="general-form">
         <label htmlFor="id">Serial number</label>
-        <Field type="number" name="id" />
+        <Field className="input-field" type="number" name="id" />
         <ErrorMessage name="id" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="type">Transportation type</label>
-        <Field type="select" name="type" component="select">
+        <Field className="input-field-select" type="select" name="type" component="select">
           <option value={0}>Create</option>
           <option value={1}>Air</option>
           <option value={2}>Sea</option>
@@ -77,19 +79,19 @@ export function MovementForm() {
         </Field>
         <ErrorMessage name="type" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="distance">Distance</label>
-        <Field type="number" name="distance" />
+        <Field className="input-field" type="number" name="distance" />
         <ErrorMessage name="distance" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="co2e">Carbon Emissions</label>
-        <Field type="number" name="co2e" />
+        <Field className="input-field" type="number" name="co2e" />
         <ErrorMessage name="co2e" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="certid">Emissions certificate</label>
-        <Field type="number" name="certid" />
+        <Field className="input-field" type="number" name="certid" />
         <ErrorMessage name="certid" component="div" />
       </div>
     </div>
@@ -97,19 +99,19 @@ export function MovementForm() {
 
   const DepartureForm = () => (
     <div>
-      <div>
+      <div className="general-form">
         <label htmlFor="departureat">Departure date</label>
-        <Field type="datetime-local" name="departureat" />
+        <Field className="input-field" type="datetime-local" name="departureat" />
         <ErrorMessage name="departureat" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="from.location">City</label>
-        <Field type="text" name="from.location" />
+        <Field className="input-field" type="text" name="from.location" />
         <ErrorMessage name="from.location" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="from.country">Country</label>
-        <Field type="text" name="from.country" />
+        <Field className="input-field" type="text" name="from.country" />
         <ErrorMessage name="from.country" component="div" />
       </div>
       {/* <div>
@@ -127,19 +129,19 @@ export function MovementForm() {
 
   const ArrivalForm = () => (
     <div>
-      <div>
+      <div className="general-form">
         <label htmlFor="arrivalat">Arrival date</label>
-        <Field type="datetime-local" name="arrivalat" />
+        <Field className="input-field" type="datetime-local" name="arrivalat" />
         <ErrorMessage name="arrivalat" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="to.location">City</label>
-        <Field type="text" name="to.location" />
+        <Field className="input-field" type="text" name="to.location" />
         <ErrorMessage name="to.location" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="to.country">Country</label>
-        <Field type="text" name="to.country" />
+        <Field className="input-field" type="text" name="to.country" />
         <ErrorMessage name="to.country" component="div" />
       </div>
       {/* <div>

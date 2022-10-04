@@ -15,6 +15,8 @@ import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 import { useContext } from "react";
 import { DataSourceContext } from "providers/blockchain/provider";
 
+import "./FormStyle.scss";
+
 interface FormProps {
   values: AssetMetadata.AsObject & Asset.AsObject;
 }
@@ -44,7 +46,7 @@ export interface SubmitFormProps {
 
 const PublishForm = ({ isSubmitting }: SubmitFormProps) => (
   <>
-    <button type="submit" disabled={isSubmitting}>
+    <button type="submit" className="btn-add" disabled={isSubmitting}>
       Publish to Blockchain
     </button>
   </>
@@ -72,34 +74,34 @@ export function AssetForm() {
   /* steps forms */
   const GeneralForm = () => (
     <div>
-      <div>
-        <label htmlFor="id">Serial number</label>
-        <Field type="number" name="id" />
+      <div className="general-form">
+        <label htmlFor="id">Serial number: </label>
+        <Field className="input-field" type="number" name="id" placeholder="#0000000" />
         <ErrorMessage name="id" component="div" />
       </div>
-      <div>
-        <label htmlFor="owner">Owner</label>
-        <Field type="text" name="owner" />
+      <div className="general-form">
+        <label htmlFor="owner">Owner:</label>
+        <Field className="input-field" type="text" name="owner"  placeholder="owner" />
         <ErrorMessage name="owner" component="div" />
       </div>
-      <div>
-        <label htmlFor="name">Asset name</label>
-        <Field type="text" name="name" />
+      <div  className="general-form">
+        <label htmlFor="name">Asset name: </label>
+        <Field className="input-field" type="text" name="name" placeholder="asset name"/>
         <ErrorMessage name="name" component="div" />
       </div>
-      <div>
-        <label htmlFor="description">Description</label>
-        <Field type="text" name="description" />
+      <div  className="general-form">
+        <label htmlFor="description">Description: </label>
+        <Field className="input-field" type="text" name="description" placeholder="description"/>
         <ErrorMessage name="description" component="div" />
       </div>
-      <div>
-        <label htmlFor="co2e">Carbon Emissions</label>
-        <Field type="number" name="co2e" />
+      <div className="general-form">
+        <label htmlFor="co2e">Carbon Emissions: </label>
+        <Field className="input-field" type="number" name="co2e" placeholder="co2e" />
         <ErrorMessage name="co2e" component="div" />
       </div>
-      <div>
-        <label htmlFor="certid">Emissions certificate</label>
-        <Field type="number" name="certid" />
+      <div  className="general-form">
+        <label htmlFor="certid">Emissions certificate: </label>
+        <Field className="input-field" type="number" name="certid" />
         <ErrorMessage name="certid" component="div" />
       </div>
       {/* <div>
@@ -122,27 +124,27 @@ export function AssetForm() {
           {values.propertiesList &&
             values.propertiesList.map((_, index) => (
               <div key={index}>
-                <div className="row">
+                <div className="general-form">
                   <label htmlFor={`propertiesList.${index}.name`}>Name</label>
-                  <Field name={`propertiesList.${index}.name`} type="text" />
+                  <Field className="input-field" name={`propertiesList.${index}.name`} type="text" />
                   <ErrorMessage
                     name={`propertiesList.${index}.name`}
                     component="div"
                     className="field-error"
                   />
                 </div>
-                <div className="row">
+                <div className="general-form">
                   <label htmlFor={`propertiesList.${index}.value`}>Value</label>
-                  <Field name={`propertiesList.${index}.value`} type="text" />
+                  <Field className="input-field" name={`propertiesList.${index}.value`} type="text" />
                   <ErrorMessage
                     name={`propertiesList.${index}.value`}
                     component="div"
                     className="field-error"
                   />
                 </div>
-                <div className="row">
+                <div className="general-form">
                   <label htmlFor={`propertiesList.${index}.icon`}>Unit</label>
-                  <Field name={`propertiesList.${index}.icon`} type="text" />
+                  <Field className="input-field" name={`propertiesList.${index}.icon`} type="text" />
                   <ErrorMessage
                     name={`propertiesList.${index}.icon`}
                     component="div"
@@ -152,7 +154,7 @@ export function AssetForm() {
                 <div className="col">
                   <button
                     type="button"
-                    className="secondary"
+                    className="btn-delete"
                     onClick={() => remove(index)}
                   >
                     X
@@ -163,7 +165,7 @@ export function AssetForm() {
 
           <button
             type="button"
-            className="secondary"
+            className="btn-add"
             onClick={() => {
               const element: AssetMetadata.Property.AsObject = {
                 icon: "",
@@ -187,20 +189,20 @@ export function AssetForm() {
           {values.imagesList &&
             values.imagesList.map((_, index) => (
               <div key={index}>
-                <div className="row">
+                <div className="general-form">
                   <label htmlFor={`imagesList.${index}.name`}>Name</label>
-                  <Field name={`imagesList.${index}.name`} type="text" />
+                  <Field className="input-field" name={`imagesList.${index}.name`} type="text" />
                   <ErrorMessage
                     name={`imagesList.${index}.name`}
                     component="div"
                     className="field-error"
                   />
                 </div>
-                <div className="row">
+                <div className="general-form">
                   <label htmlFor={`imagesList.${index}.attachment`}>
                     Attachment
                   </label>
-                  <Field name={`imagesList.${index}.attachment`} type="text" />
+                  <Field className="input-field" name={`imagesList.${index}.attachment`} type="text" />
                   <ErrorMessage
                     name={`imagesList.${index}.attachment`}
                     component="div"
@@ -210,7 +212,7 @@ export function AssetForm() {
                 <div className="col">
                   <button
                     type="button"
-                    className="secondary"
+                    className="btn-delete"
                     onClick={() => remove(index)}
                   >
                     X
@@ -221,7 +223,7 @@ export function AssetForm() {
 
           <button
             type="button"
-            className="secondary"
+            className="btn-add"
             onClick={() => {
               const element: Image.AsObject = { attachment: "", name: "" };
               push(element);
@@ -236,19 +238,19 @@ export function AssetForm() {
 
   const CreationForm = () => (
     <div>
-      <div>
+      <div className="general-form">
         <label htmlFor="createdAt">Creation date</label>
-        <Field type="datetime-local" name="createdAt" />
+        <Field className="input-field" type="datetime-local" name="createdAt" />
         <ErrorMessage name="createdAt" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="creation.location">City</label>
-        <Field type="text" name="creation.location" />
+        <Field className="input-field" type="text" name="creation.location" />
         <ErrorMessage name="creation.location" component="div" />
       </div>
-      <div>
+      <div className="general-form">
         <label htmlFor="creation.country">Country</label>
-        <Field type="text" name="creation.country" />
+        <Field className="input-field" type="text" name="creation.country" />
         <ErrorMessage name="creation.country" component="div" />
       </div>
       {/* <div>
@@ -271,9 +273,9 @@ export function AssetForm() {
           {values.linksList &&
             values.linksList.map((_, index) => (
               <div key={index}>
-                <div className="row">
+                <div className="general-form">
                   <label htmlFor={`linksList.${index}.name`}>Name</label>
-                  <Field name={`linksList.${index}.name`} type="text" />
+                  <Field className="input-field" name={`linksList.${index}.name`} type="text" />
                   <ErrorMessage
                     name={`linksList.${index}.name`}
                     component="div"
@@ -289,9 +291,9 @@ export function AssetForm() {
                     className="field-error"
                   />
                 </div> */}
-                <div className="row">
+                <div className="general-form">
                   <label htmlFor={`linksList.${index}.url`}>Url</label>
-                  <Field name={`linksList.${index}.url`} type="text" />
+                  <Field className="input-field" name={`linksList.${index}.url`} type="text" />
                   <ErrorMessage
                     name={`linksList.${index}.url`}
                     component="div"
@@ -301,7 +303,7 @@ export function AssetForm() {
                 <div className="col">
                   <button
                     type="button"
-                    className="secondary"
+                    className="btn-delete"
                     onClick={() => remove(index)}
                   >
                     X
@@ -312,7 +314,7 @@ export function AssetForm() {
 
           <button
             type="button"
-            className="secondary"
+            className="btn-add"
             onClick={() => {
               const element: Link.AsObject = { icon: "", name: "", url: "" };
               push(element);
