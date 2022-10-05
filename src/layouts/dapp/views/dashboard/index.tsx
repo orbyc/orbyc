@@ -9,6 +9,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Text,
   Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -158,6 +159,18 @@ export const Home = () => {
     <>
       <Container maxW="8xl">
         <Divider />
+        <Center>
+          <Box
+            width={320}
+            height={110}
+            bgImage={`/name.png`}
+            bgSize={`cover`}
+          />
+          <Text marginTop={50} fontWeight="bold" color={`#0B785A`}>
+            Explorer
+          </Text>
+        </Center>
+        <br />
 
         <Center>
           <Box width={600}>
@@ -184,11 +197,11 @@ export const Home = () => {
           </Box>
         </Center>
 
-        <Divider />
+        {/* <Divider />
 
         <Center>
           <DZone />
-        </Center>
+        </Center> */}
 
         <Divider />
 
