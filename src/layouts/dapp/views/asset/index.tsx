@@ -28,7 +28,7 @@ import { useFetch } from "hooks";
 import { AssetMetadata, MovementMetadata } from "orbyc-core/pb/metadata_pb";
 import { decodeHex } from "orbyc-core/utils/encoding";
 import { DataSourceContext } from "providers/blockchain/provider";
-import { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Stat } from "./components/Stat";
 import { ImagesModal } from "./components/ImagesModal";
@@ -42,6 +42,7 @@ import {
 import Carousel from "react-multi-carousel";
 import { ComponentCard } from "./components/ComponentCards";
 import { ShareButton } from "./components/ShareButton";
+import { MapModal } from "./components/Modal/MapModal";
 
 export const AssetView = () => {
   const { id } = useParams();
@@ -184,37 +185,50 @@ export const AssetComponent = (props: AssetProps) => {
     if (errorComposition) console.log({ error: errorComposition });
   }, [errorComposition]);
 
+  /* MODAL */
+  const [isOpen, { on, off }] = useBoolean(false);
+
+
   /* USE DATA */
   const MovementsData = useCallback(
     () =>
       loadingMoves ? (
         <></>
       ) : (
-        <Grid templateColumns={`repeat(3,1fr)`} gap={4}>
-          <GridItem>
-            <Stat
-              label={`Carbon emissions`}
-              value={shortWeight(
-                dataAsset!.asset.getCo2e() +
+        <>
+          <Grid templateColumns={`repeat(3,1fr)`} gap={4}>
+            <GridItem>
+              <Stat
+                label={`Carbon emissions`}
+                value={shortWeight(
+                  dataAsset!.asset.getCo2e() 
+                  +
                   getMovementsCarbonEmissions(dataMoves!)
-              )}
-            />
-          </GridItem>
-          <GridItem>
-            <Stat
-              label={`Km to deliver`}
-              value={shortNumber(getMovementsKilometers(dataMoves!))}
-            />
-          </GridItem>
-          <GridItem>
-            <Stat
-              label={`Countries involved`}
-              value={shortNumber(getMovementsCountries(dataMoves!).length)}
-            />
-          </GridItem>
-        </Grid>
+                )}
+              />
+            </GridItem>
+            <GridItem onClick={on}>
+              <Stat
+                label={`Km to deliver`}
+                value={shortNumber(getMovementsKilometers(dataMoves!))}
+              />
+            </GridItem>
+            <GridItem>
+              <Stat
+                label={`Countries involved`}
+                value={shortNumber(getMovementsCountries(dataMoves!).length)}
+              />
+            </GridItem>
+          </Grid>
+          <MapModal
+              dataAsset={dataAsset!}
+              movements={dataMoves!}
+              isOpen={isOpen}
+              onClose={off}
+              assetId={dataAsset!.asset.getId()} />
+        </>
       ),
-    [loadingMoves, dataMoves, dataAsset]
+    [loadingMoves, dataAsset, dataMoves, on, isOpen, off]
   );
 
   const CompositionData = useCallback(
@@ -223,8 +237,8 @@ export const AssetComponent = (props: AssetProps) => {
         <></>
       ) : (
         <Carousel responsive={responsive}>
-          {dataComposition!.map((data) => (
-            <ComponentCard {...data} />
+          {dataComposition!.map((data, index) => (
+            <ComponentCard {...data} key={index} />
           ))}
         </Carousel>
       ),
@@ -274,8 +288,8 @@ export const AssetComponent = (props: AssetProps) => {
     () => (
       <Box p={4} borderRadius={10} bgColor={toggleColor}>
         <Grid templateColumns="repeat(3, 1fr)">
-          {dataAsset?.metadata.getLinksList().map((link) => (
-            <>
+          {dataAsset?.metadata.getLinksList().map((link, index) => (
+            <React.Fragment key={index}>
               <GridItem>
                 <Center>
                   <a href={link.getUrl()} target="_blank" rel="noreferrer">
@@ -283,7 +297,7 @@ export const AssetComponent = (props: AssetProps) => {
                   </a>
                 </Center>
               </GridItem>
-            </>
+            </React.Fragment>
           ))}
         </Grid>
       </Box>
@@ -366,7 +380,7 @@ export const AssetComponent = (props: AssetProps) => {
             <Spacer />
             <IssuerIcon
               src={dataAsset!.issuer.getLogo()!.getAttachment()}
-              // href={dataAsset!.issuer.getLinksList()[0].getUrl()}
+            // href={dataAsset!.issuer.getLinksList()[0].getUrl()}
             />
             <ShareButton assetId={dataAsset!.asset.getId()} />
           </HStack>
