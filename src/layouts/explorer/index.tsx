@@ -16,6 +16,7 @@ import {
   theme,
 } from "@chakra-ui/react";
 import { AssetComponent } from "layouts/dapp/views/asset";
+import { InfuraNetwork, OrbycAddress } from "data";
 
 export const ExplorerLayout = () => {
   return (
@@ -36,10 +37,8 @@ const ExplorerView = () => {
     dispatch(
       addDataSource(
         EthersDataSource(
-          new ethers.providers.JsonRpcProvider(
-            `https://goerli.infura.io/v3/1e11387af97e45669280bcb33254891e`
-          ),
-          "0x103e864f1BFedeACd63b09874A228a7131316466"
+          new ethers.providers.JsonRpcProvider(InfuraNetwork),
+          OrbycAddress
         )
       )
     );

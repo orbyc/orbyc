@@ -12,6 +12,7 @@ import {
 import { useMetaMask } from "metamask-react";
 import { EthersDataSource } from "providers/blockchain/datasource";
 import { ethers } from "ethers";
+import { NetworkId, OrbycAddress } from "data";
 
 // const NavLink = ({ children }: { children: ReactNode }) => (
 //   <Link
@@ -27,7 +28,6 @@ import { ethers } from "ethers";
 //     {children}
 //   </Link>
 // );
-const requiredChain = `0x5`;
 
 export function ConnectWalletButton(): JSX.Element {
   const { status, connect, ethereum, switchChain, chainId } = useMetaMask();
@@ -39,11 +39,11 @@ export function ConnectWalletButton(): JSX.Element {
         addDataSource(
           EthersDataSource(
             new ethers.providers.Web3Provider(ethereum),
-            "0x103e864f1BFedeACd63b09874A228a7131316466"
+            OrbycAddress
           )
         )
       );
-      switchChain(requiredChain);
+      switchChain(NetworkId);
     } else {
       dispatch(removeDataSource());
     }

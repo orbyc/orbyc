@@ -1,4 +1,4 @@
-import { SearchIcon } from "@chakra-ui/icons";
+import { SearchIcon, SpinnerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Center,
@@ -9,11 +9,12 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Spinner,
   Text,
   Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import { useNavigate } from "react-router-dom";
 import AssetCard from "./components/AssetCard";
@@ -22,9 +23,17 @@ import { FormModal } from "layouts/dapp/forms/ModalForm";
 import { AssetForm } from "layouts/dapp/forms/AssetForm";
 import { CertificateForm } from "layouts/dapp/forms/CertificateForm";
 import { MovementForm } from "layouts/dapp/forms/MovementForm";
-import { MdFeed, MdOutlineVerified, MdTimeline } from "react-icons/md";
+import {
+  MdDownload,
+  MdFeed,
+  MdOutlineVerified,
+  MdTimeline,
+} from "react-icons/md";
 import { useDropzone } from "react-dropzone";
 import Excel from "exceljs";
+import { ExplorerNetwork, OrbycAddress } from "data";
+import { DataSourceContext } from "providers/blockchain/provider";
+import { useFetch } from "hooks";
 
 type IssueForm = "ASSET" | "CERTIFICATE" | "MOVEMENT" | "NONE";
 
@@ -79,6 +88,16 @@ const DZone = () => {
 export const Home = () => {
   const navigate = useNavigate();
 
+  const { state } = useContext(DataSourceContext);
+  const { erc423, utils } = state.datasource!;
+
+  const getAccount = useCallback(async () => {
+    const agent = await utils.currentAccount();
+    return await erc423.accountOf(agent);
+  }, [erc423, utils]);
+
+  const { data: account, loading: loadingAccount } = useFetch(getAccount());
+
   const handleSubmit = useCallback(
     (e: any) => {
       if (e.code === "Enter") navigate(`/browser/${e.target.value}`);
@@ -96,6 +115,22 @@ export const Home = () => {
   const IssueButtons = useCallback(
     () => (
       <HStack ml={3}>
+        {/* DOWNLOAD ASSETS LIST */}
+        <Tooltip label={`Download Assets List`}>
+          <a
+            href={`${ExplorerNetwork}/exportData?type=tokentxns-nft&contract=${OrbycAddress}&a=${account}&decimal=0`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <IconButton
+              aria-label="Download Assets List"
+              borderRadius={20}
+              fontSize="20px"
+            >
+              {loadingAccount ? <Spinner /> : <MdDownload />}
+            </IconButton>
+          </a>
+        </Tooltip>
         {/* ISSUE ASSET */}
         <FormModal
           title={`Issue Asset`}
@@ -152,7 +187,7 @@ export const Home = () => {
         </Tooltip>
       </HStack>
     ),
-    [closeForm, form, openForm]
+    [closeForm, form, openForm, loadingAccount, account]
   );
 
   return (
